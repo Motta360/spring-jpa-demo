@@ -2,8 +2,9 @@ package com.lucasmotta.course.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.lucasmotta.course.entities.Category;
+import com.lucasmotta.course.entities.OrderItem;
+import com.lucasmotta.course.entities.pk.OrderItemPk;
 
-public interface OrderItemRepository extends JpaRepository<Category, Long>{
+public interface OrderItemRepository extends JpaRepository<OrderItem, OrderItemPk>{
 	
 }
