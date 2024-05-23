@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lucasmotta.course.entities.enums.OrderStatus;
 
 import jakarta.persistence.CascadeType;
@@ -42,8 +43,8 @@ public class Order implements Serializable {
 	private User client;
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
-	
-	@OneToOne(mappedBy = "order",cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 
 	public Order(Long id, Instant moment, OrderStatus orderStatus, User client) {
@@ -53,10 +54,9 @@ public class Order implements Serializable {
 		setOrderStatus(orderStatus);
 		;
 	}
-	
+
 	public Order() {
 	}
-
 
 	public Set<OrderItem> getItems() {
 		return items;
@@ -66,7 +66,6 @@ public class Order implements Serializable {
 		return serialVersionUID;
 	}
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -100,8 +99,6 @@ public class Order implements Serializable {
 	public void setClient(User client) {
 		this.client = client;
 	}
-	
-	
 
 	public Payment getPayment() {
 		return payment;
@@ -109,6 +106,14 @@ public class Order implements Serializable {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public Double getTotal() {
+		double soma = 0;
+		for (OrderItem x : items) {
+			soma += x.getSubTotal();
+		}
+		return soma;
 	}
 
 	@Override
