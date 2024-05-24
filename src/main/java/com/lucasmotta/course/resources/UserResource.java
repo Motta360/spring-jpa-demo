@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,24 +22,31 @@ import com.lucasmotta.course.services.UserService;
 public class UserResource {
 	@Autowired
 	private UserService userService;
+
 	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	public ResponseEntity<List<User>> findAll() {
 		List<User> list = userService.findAll();
 		return ResponseEntity.ok().body(list);
 	}
+
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<User> findById(@PathVariable long id){
+	public ResponseEntity<User> findById(@PathVariable long id) {
 		User obj = userService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj){
+	public ResponseEntity<User> insert(@RequestBody User obj) {
 		obj = userService.insert(obj);
-		URI uri =ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(obj.getId()).toUri();
-		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
 		return ResponseEntity.created(uri).body(obj);
-		
+
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		userService.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
