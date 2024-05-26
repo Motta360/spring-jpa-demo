@@ -18,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.lucasmotta.course.entities.User;
 import com.lucasmotta.course.services.UserService;
 
-
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
@@ -51,9 +50,9 @@ public class UserResource {
 		userService.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
+	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) {
 		obj = userService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 public class StandardError implements Serializable {
+
 	/**
 	 * 
 	 */
